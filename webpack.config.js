@@ -99,11 +99,7 @@ module.exports = async (env, options)  => {
         "Access-Control-Allow-Origin": "*"
       },      
       https: (options.https !== undefined) ? options.https : await devCerts.getHttpsServerOptions(),
-      contentBase: path.join(__dirname, 'dist'),
-      compress: true,
-      port: process.env.npm_package_config_dev_server_port || 3000,
-
-
+      port: process.env.npm_package_config_dev_server_port || 3000
     }
   };
 
