@@ -37,14 +37,13 @@ const ELEMENT_GROUPS_ROWS = [
   // Fabrication Services
   { row: "130" },
   // Design Services
-  { row: "145" }
-]
+  { row: "145" },
+];
 
 const App = (props) => {
   const [listElementGroup, setListElementGroup] = useState([]);
 
   useEffect(() => {
-
     const getElementGroupText = async () => {
       try {
         await Excel.run(async (context) => {
@@ -67,7 +66,6 @@ const App = (props) => {
           // displayRange2.values = [[JSON.stringify(elementGroup)]];
 
           setListElementGroup(elementGroup);
-
         });
       } catch (error) {
         console.error(error);
@@ -76,10 +74,7 @@ const App = (props) => {
     };
 
     getElementGroupText();
-
-  }, [])
-
-
+  }, []);
 
   const click = async () => {
     try {
@@ -120,18 +115,16 @@ const App = (props) => {
         // Find empty cells and hide the corresponding rows
         const hideRows = range.values.map((element, index) => {
           if (element[0] == "") {
-            sheet.getRange(`${letterColumn}${rowStart + index}`).rowHidden = true
+            sheet.getRange(`${letterColumn}${rowStart + index}`).rowHidden = true;
             return `Hide row ${rowStart + index}`;
-          };
+          }
           return "Unhide";
         });
-
 
         // Display results in cell K8
         const str = JSON.stringify(hideRows);
         // displayRange.values = [[str]];
         // displayRange2.values = [["test"]]
-
       });
     } catch (error) {
       console.error(error);
@@ -147,8 +140,7 @@ const App = (props) => {
         sheet.getRange(`${letterColumn}${rowStart}:${letterColumn}${rowEnd}`).rowHidden = false;
 
         // sheet.getRange("K10").values = [["unhide"]]
-        console.log("test")
-
+        console.log("test");
       });
     } catch (error) {
       console.error(error);
@@ -158,9 +150,8 @@ const App = (props) => {
   const hideActiveRows = async () => {
     try {
       await Excel.run(async (context) => {
-
         // const range = context.workbook.getSelectedRange();
-        const sheet = context.workbook.worksheets.getActiveWorksheet()
+        const sheet = context.workbook.worksheets.getActiveWorksheet();
 
         let range = sheet.getRange("A15:A21");
         range.load("values");
@@ -199,8 +190,12 @@ const App = (props) => {
       <HeroList
         message="Hide and Unhide Element Groups."
         items={listElementGroup}
-        clickExpand={(start, end) => { unhideEmptyRows(start, end) }}
-        clickCollapse={(start, end) => { hideEmptyRows(start, end) }}
+        clickExpand={(start, end) => {
+          unhideEmptyRows(start, end);
+        }}
+        clickCollapse={(start, end) => {
+          hideEmptyRows(start, end);
+        }}
       >
         <p className="ms-font-l">
           Modify the source files, then click <b>Run</b>.
@@ -224,9 +219,9 @@ const App = (props) => {
           Unhide
         </DefaultButton>
       </HeroList>
-    </div >
+    </div>
   );
-}
+};
 
 App.propTypes = {
   title: PropTypes.string,
